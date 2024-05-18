@@ -82,5 +82,13 @@ namespace WindowsFormsApp1
             tarixi.ShowDialog();
             this.Close();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Form8 xodimlar = new Form8();
+            this.Hide();
+            xodimlar.ShowDialog();
+            this.Close();
+        }
     }
 }

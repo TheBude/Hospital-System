@@ -18,6 +18,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
+        
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -26,68 +27,114 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cmd = new SqlCommand("insert into userTab values (@ID,@Name,@Age,@lavozimi,@bulim_raqami)", con);
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO oyinchi (id_fudbolchi, ism, familiya, komanda, millat, yoshi, pozitsiya) VALUES (@id_fudbolchi, @ism, @familiya, @komanda, @millat, @yoshi, @pozitsiya)", con);
 
-            cmd.Parameters.AddWithValue("@ID", int.Parse(textBox1.Text));
-            cmd.Parameters.AddWithValue("@Name", textBox2.Text);
-            cmd.Parameters.AddWithValue("@Age", double.Parse(textBox3.Text));
-            cmd.Parameters.AddWithValue("@lavozimi", textBox4.Text);
-            cmd.Parameters.AddWithValue("@bulim_raqami", textBox5.Text);
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@id_fudbolchi", int.Parse(textBox1.Text));
+                cmd.Parameters.AddWithValue("@ism", textBox2.Text);
+                cmd.Parameters.AddWithValue("@familiya", textBox3.Text);
+                cmd.Parameters.AddWithValue("@komanda", comboBox3.SelectedItem);
+                cmd.Parameters.AddWithValue("@millat", comboBox1.SelectedItem);
+                cmd.Parameters.AddWithValue("@yoshi", int.Parse(textBox5.Text));
+                cmd.Parameters.AddWithValue("@pozitsiya", comboBox2.SelectedItem);
+                cmd.ExecuteNonQuery();
 
-            con.Close();
-            MessageBox.Show("Muvfoqiyatli Qo'shildi!", "Yaxshi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
+                MessageBox.Show("Muvoffaqiyatli qo'shildi!", "Yaxshi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                SqlCommand cmg = new SqlCommand("Select * from oyinchi", con);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmg);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridView1.DataSource = dt;
+                con.Close();
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox5.Clear();
+                comboBox1.SelectedIndex = -1;
+                comboBox2.SelectedIndex = -1;
+                comboBox3.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Xatolik: " + ex.Message, "Xatolik", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
-            con.Open();
-            SqlCommand cmd = new SqlCommand("Update userTab set Name=@Name, Age=@Age, lavozimi=@lavozimi, bulim_raqami= @bulim_raqami where ID = @ID  ", con);
+            try
+            {
+                SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("Update oyinchi set yoshi=@yoshi, ism=@ism, familiya= @familiya, komanda=@komanda, millat=@millat, pozitsiya=@pozitsiya where id_fudbolchi=@id_fudbolchi", con);
 
-            cmd.Parameters.AddWithValue("@ID", int.Parse(textBox1.Text));
-            cmd.Parameters.AddWithValue("@Name", textBox2.Text);
-            cmd.Parameters.AddWithValue("@Age", double.Parse(textBox3.Text));
-            cmd.Parameters.AddWithValue("@lavozimi", textBox4.Text);
-            cmd.Parameters.AddWithValue("@bulim_raqami", textBox5.Text);
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@id_fudbolchi", int.Parse(textBox1.Text));
+                cmd.Parameters.AddWithValue("@ism", textBox2.Text);
+                cmd.Parameters.AddWithValue("@familiya", textBox3.Text);
+                cmd.Parameters.AddWithValue("@komanda", comboBox3.SelectedItem);
+                cmd.Parameters.AddWithValue("@millat", comboBox1.SelectedItem);
+                cmd.Parameters.AddWithValue("@yoshi", int.Parse(textBox5.Text));
+                cmd.Parameters.AddWithValue("@pozitsiya", comboBox2.SelectedItem);
+                cmd.ExecuteNonQuery();
 
-            con.Close();
-            MessageBox.Show("Muvfoqiyatli Yangilandi!", "Yaxshi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
+                MessageBox.Show("Muvoffaqiyatli Yangilandi!", "Yaxshi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                SqlCommand cmg = new SqlCommand("Select * from oyinchi", con);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmg);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridView1.DataSource = dt;
+                con.Close();
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox5.Clear();
+                comboBox1.SelectedIndex = -1;
+                comboBox2.SelectedIndex = -1;
+                comboBox3.SelectedIndex = -1;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Xatolik: " + ex.Message, "Xatolik", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
             con.Open();
-            SqlCommand cmd = new SqlCommand("Delete userTab where ID=@ID", con);
-            cmd.Parameters.AddWithValue("@ID", int.Parse(textBox1.Text));
+            SqlCommand cmd = new SqlCommand("Delete oyinchi where id_fudbolchi=@id_fudbolchi", con);
+            cmd.Parameters.AddWithValue("@id_fudbolchi", int.Parse(textBox1.Text));
             cmd.ExecuteNonQuery();
 
-            con.Close();
             MessageBox.Show("Muvfoqiyatli O'chirildi!", "Yaxshi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            SqlCommand cmg = new SqlCommand("Select * from oyinchi", con);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmg);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dataGridView1.DataSource = dt;
+            con.Close();
+
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
-            textBox4.Clear();
             textBox5.Clear();
+            comboBox1.SelectedIndex = -1;
+            comboBox2.SelectedIndex = -1;
+            comboBox3.SelectedIndex = -1;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
             con.Open();
             DataTable dt = new DataTable();
 
@@ -96,8 +143,8 @@ namespace WindowsFormsApp1
                 int idValue;
                 if (int.TryParse(textBox1.Text, out idValue))
                 {
-                    SqlCommand cmd = new SqlCommand("Select * from userTab where ID=@ID", con);
-                    cmd.Parameters.AddWithValue("@ID", idValue);
+                    SqlCommand cmd = new SqlCommand("Select * from oyinchi where id_fudbolchi=@id_fudbolchi", con);
+                    cmd.Parameters.AddWithValue("@id_fudbolchi", idValue);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(dt);
                 }
@@ -106,11 +153,11 @@ namespace WindowsFormsApp1
                     MessageBox.Show("Please enter a valid numeric ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else if (!String.IsNullOrEmpty(textBox2.Text) && textBox2.Text.Length >= 1)
+            else if (!String.IsNullOrEmpty(textBox2.Text))
             {
                 string searchPattern = textBox2.Text.Substring(0, 1) + "%";
-                SqlCommand cmd = new SqlCommand("Select * from userTab where Name LIKE @NamePattern", con);
-                cmd.Parameters.AddWithValue("@NamePattern", searchPattern);
+                SqlCommand cmd = new SqlCommand("Select * from oyinchi where ism LIKE @ismPattern", con);
+                cmd.Parameters.AddWithValue("@ismPattern", searchPattern);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
             }
@@ -139,13 +186,14 @@ namespace WindowsFormsApp1
 
         private void button5_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
             con.Open();
-            SqlCommand cmd = new SqlCommand("Select * from userTab", con);
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            SqlCommand cmg = new SqlCommand("Select * from oyinchi", con);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmg);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
             dataGridView1.DataSource = dt;
+            con.Close();
         }
 
         
@@ -176,6 +224,38 @@ namespace WindowsFormsApp1
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             timer1.Start();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["id_fudbolchi"].FormattedValue.ToString();
+                    textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["familiya"].FormattedValue.ToString();
+                    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["ism"].FormattedValue.ToString();
+                    comboBox2.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells["pozitsiya"].FormattedValue.ToString();
+                    textBox5.Text = dataGridView1.Rows[e.RowIndex].Cells["yoshi"].FormattedValue.ToString();
+                    comboBox1.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells["millat"].FormattedValue.ToString();
+                    comboBox3.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells["komanda"].FormattedValue.ToString();
+
+                }
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

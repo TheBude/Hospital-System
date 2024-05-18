@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=LAPTOP-RJJLU7JV\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+        SqlConnection conn = new SqlConnection(@"Data Source=LAPTOP-RJJLU7JV\SQLEXPRESS;Initial Catalog=fudbol;Integrated Security=True;Encrypt=False");
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -62,9 +62,9 @@ namespace WindowsFormsApp1
                     textBox2.Clear();
                 }
             }
-            catch
+            catch(Exception ex) 
             {
-                MessageBox.Show("Xarolik");
+                MessageBox.Show("Serverdan Xatolik" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

@@ -31,9 +31,9 @@ namespace WindowsFormsApp1
 
         private void button5_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=Unversity-system;Integrated Security=True;Encrypt=False");
             con.Open();
-            SqlCommand cmd = new SqlCommand("Select * from userTab2", con);
+            SqlCommand cmd = new SqlCommand("Select * from ishchi_reja", con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
@@ -43,15 +43,16 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=rentcar;Integrated Security=True;Encrypt=False");
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-RJJLU7JV\\SQLEXPRESS;Initial Catalog=Unversity-system;Integrated Security=True;Encrypt=False");
             con.Open();
             DataTable dt = new DataTable();
+
 
             if (!String.IsNullOrEmpty(textBox1.Text) && textBox1.Text.Length >= 1)
             {
                 string searchPattern = textBox1.Text.Substring(0, 1) + "%";
-                SqlCommand cmd = new SqlCommand("Select * from userTab2 where Ism LIKE @IsmPattern", con);
-                cmd.Parameters.AddWithValue("@IsmPattern", searchPattern);
+                SqlCommand cmd = new SqlCommand("Select * from ishchi_reja where yonalish LIKE @yonalishPattern", con);
+                cmd.Parameters.AddWithValue("@yonalishPattern", searchPattern);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
             }
@@ -59,6 +60,7 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("Iltimos, Qidirish uchun So'z Kiriting.", "Incomplete Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
 
             if (dt.Rows.Count > 0)
             {
@@ -78,6 +80,16 @@ namespace WindowsFormsApp1
             this.Hide();
             form3.ShowDialog();
             this.Close();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
